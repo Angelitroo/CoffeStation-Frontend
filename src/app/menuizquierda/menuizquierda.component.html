@@ -46,12 +46,11 @@
       <h1>{{ pagina()['title'] }}</h1>
       <span class="spacer"></span>
 
-      @if (rol === 'ADMIN') {
-        <a routerLink="/productos/nuevo" class="btn btn-primary"><app-icon class="sm" name="plus" /> Nuevo producto</a>
-      } @else {
-        <a routerLink="/nuevo-pedido" class="btn btn-primary"><app-icon class="sm" name="plus" /> Nuevo pedido</a>
+      @let accion = pagina()['accion'];
+      @if (accion && accion.roles.includes(rol)) {
+        <a [routerLink]="accion.ruta" class="btn btn-primary"><app-icon class="sm" name="plus" /> {{ accion.texto }}</a>
       }
-      <button class="icon-btn" aria-label="Ayuda"><app-icon name="help" /></button>
+      <button class="icon-btn ayuda" aria-label="Ayuda"><app-icon name="help" /></button>
       <button class="icon-btn" aria-label="Notificaciones"><app-icon name="bell" /></button>
       <span class="avatar" title="Laura Martín · {{ rol }}">LM</span>
     </header>

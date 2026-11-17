@@ -161,7 +161,8 @@
     padding: 0 16px;
   }
 
-  .topbar .btn-primary {
+  // En pantallas estrechas se mantiene la acción principal y se oculta la ayuda
+  .ayuda {
     display: none;
   }
 

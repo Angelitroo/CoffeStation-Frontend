@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import { MenuizquierdaComponent } from './menuizquierda/menuizquierda.component';
 
+// data.title  → título de la cabecera
+// data.accion → botón principal de la cabecera; solo se muestra a los roles
+//               que el backend autoriza para esa operación (@PreAuthorize)
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
 
@@ -30,64 +33,70 @@ export const routes: Routes = [
       {
         path: 'pedidos',
         title: 'Pedidos · CoffeStation',
-        data: { title: 'Pedidos', subtitle: 'Seguimiento y estado de los pedidos' },
+        data: {
+          title: 'Pedidos',
+          accion: { texto: 'Nuevo pedido', ruta: '/nuevo-pedido', roles: ['BARISTA', 'CLIENTE'] },
+        },
         loadComponent: () =>
           import('./pedidos/pedidos.component').then((m) => m.PedidosComponent),
       },
       {
         path: 'pedidos/:id',
         title: 'Detalle del pedido · CoffeStation',
-        data: { title: 'Detalle del pedido', subtitle: 'Líneas, importes y estado' },
+        data: { title: 'Detalle del pedido' },
         loadComponent: () =>
           import('./pedidodetalle/pedidodetalle.component').then((m) => m.PedidodetalleComponent),
       },
       {
         path: 'nuevo-pedido',
         title: 'Nuevo pedido · CoffeStation',
-        data: { title: 'Nuevo pedido', subtitle: 'Selecciona productos de la carta' },
+        data: { title: 'Nuevo pedido' },
         loadComponent: () => import('./nuevopedido/nuevopedido.component').then((m) => m.NuevopedidoComponent),
       },
       {
         path: 'productos',
         title: 'Productos · CoffeStation',
-        data: { title: 'Productos', subtitle: 'Carta, precios y disponibilidad' },
+        data: {
+          title: 'Productos',
+          accion: { texto: 'Nuevo producto', ruta: '/productos/nuevo', roles: ['ADMIN'] },
+        },
         loadComponent: () =>
           import('./productos/productos.component').then((m) => m.ProductosComponent),
       },
       {
         path: 'productos/nuevo',
         title: 'Nuevo producto · CoffeStation',
-        data: { title: 'Nuevo producto', subtitle: 'Añade un producto a la carta' },
+        data: { title: 'Nuevo producto' },
         loadComponent: () =>
           import('./productoform/productoform.component').then((m) => m.ProductoformComponent),
       },
       {
         path: 'productos/:id/editar',
         title: 'Editar producto · CoffeStation',
-        data: { title: 'Editar producto', subtitle: 'Modifica los datos del producto' },
+        data: { title: 'Editar producto' },
         loadComponent: () =>
           import('./productoform/productoform.component').then((m) => m.ProductoformComponent),
       },
       {
         path: 'categorias',
         title: 'Categorías · CoffeStation',
-        data: { title: 'Categorías', subtitle: 'Organización de la carta' },
+        data: { title: 'Categorías' },
         loadComponent: () => import('./categorias/categorias.component').then((m) => m.CategoriasComponent),
       },
       {
         path: 'cupones',
         title: 'Cupones · CoffeStation',
-        data: { title: 'Cupones', subtitle: 'Descuentos y promociones' },
+        data: { title: 'Cupones' },
         loadComponent: () => import('./cupones/cupones.component').then((m) => m.CuponesComponent),
       },
       {
         path: 'informes',
         title: 'Informes · CoffeStation',
-        data: { title: 'Informes', subtitle: 'Ventas diarias y productos más vendidos' },
+        data: { title: 'Informes' },
         loadComponent: () => import('./informes/informes.component').then((m) => m.InformesComponent),
       },
     ],
   },
 
-  { path: '**', redirectTo: 'dashboard' },
+  { path: '**', redirectTo: 'pedidos' },
 ];

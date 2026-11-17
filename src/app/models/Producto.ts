@@ -8,4 +8,5 @@ export interface Producto {
   activo: boolean;
   categoria: string;
   alergenos: string[];
+  imagen?: string; // URL de la fotografía del producto
 }

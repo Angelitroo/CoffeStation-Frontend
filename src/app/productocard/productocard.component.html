@@ -1,0 +1,24 @@
+@let p = producto;
+<article class="card" [class.agotado]="!p.disponible">
+  <div class="info">
+    <h4>{{ p.nombre }}</h4>
+    <p class="descripcion">{{ p.descripcion }}</p>
+    @if (p.alergenos.length) {
+      <p class="alergenos">{{ p.alergenos.join(' · ') }}</p>
+    }
+    <p class="precio">
+      {{ p | precioIva | currency: 'EUR' }}
+      @if (!p.disponible) {
+        <span class="sello">Agotado</span>
+      }
+    </p>
+  </div>
+
+  <div class="foto">
+    @if (p.imagen) {
+      <img [src]="p.imagen" [alt]="p.nombre" loading="lazy" />
+    } @else {
+      <span class="inicial">{{ p.nombre[0] }}</span>
+    }
+  </div>
+</article>

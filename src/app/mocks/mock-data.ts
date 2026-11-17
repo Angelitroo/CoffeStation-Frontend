@@ -13,6 +13,12 @@ import { ResumenDia } from '../models/ResumenDia';
 // las acciones según los permisos (@PreAuthorize) del backend.
 export const ROL_ACTUAL: Rol = 'ADMIN';
 
+// Fotografías de producto (en el backend llegarán como URL en Producto.imagen)
+const foto = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=900&q=70`;
+
+// Imagen de cabecera de la carta pública
+export const FOTO_PORTADA = foto('1442512595331-e89e73853f31');
+
 export const CATEGORIAS: Categoria[] = [
   { id: 1, nombre: 'Cafés', estado: true },
   { id: 2, nombre: 'Tés e infusiones', estado: true },
@@ -40,23 +46,23 @@ export const ALERGENOS: Alergeno[] = [
 ];
 
 export const PRODUCTOS: Producto[] = [
-  { id: 1, nombre: 'Espresso', descripcion: 'Café de especialidad, tueste medio', precioSinIva: 1.27, iva: 10, disponible: true, activo: true, categoria: 'Cafés', alergenos: [] },
-  { id: 2, nombre: 'Cortado', descripcion: 'Espresso con un toque de leche', precioSinIva: 1.36, iva: 10, disponible: true, activo: true, categoria: 'Cafés', alergenos: ['Lácteos'] },
-  { id: 3, nombre: 'Americano', descripcion: 'Espresso alargado con agua caliente', precioSinIva: 1.45, iva: 10, disponible: true, activo: true, categoria: 'Cafés', alergenos: [] },
-  { id: 4, nombre: 'Cappuccino', descripcion: 'Espresso, leche vaporizada y espuma', precioSinIva: 2.18, iva: 10, disponible: true, activo: true, categoria: 'Cafés', alergenos: ['Lácteos'] },
-  { id: 5, nombre: 'Flat white', descripcion: 'Doble ristretto con leche sedosa', precioSinIva: 2.45, iva: 10, disponible: true, activo: true, categoria: 'Cafés', alergenos: ['Lácteos'] },
-  { id: 6, nombre: 'Latte de avena', descripcion: 'Espresso con bebida de avena', precioSinIva: 2.55, iva: 10, disponible: false, activo: true, categoria: 'Cafés', alergenos: ['Gluten'] },
-  { id: 7, nombre: 'Matcha latte', descripcion: 'Té matcha ceremonial con leche', precioSinIva: 3.0, iva: 10, disponible: true, activo: true, categoria: 'Tés e infusiones', alergenos: ['Lácteos'] },
-  { id: 8, nombre: 'Chai latte', descripcion: 'Té negro especiado con leche', precioSinIva: 2.82, iva: 10, disponible: true, activo: true, categoria: 'Tés e infusiones', alergenos: ['Lácteos'] },
-  { id: 9, nombre: 'Rooibos vainilla', descripcion: 'Infusión sin teína', precioSinIva: 1.82, iva: 10, disponible: true, activo: true, categoria: 'Tés e infusiones', alergenos: [] },
-  { id: 10, nombre: 'Croissant de mantequilla', descripcion: 'Hojaldre artesano del día', precioSinIva: 1.64, iva: 10, disponible: true, activo: true, categoria: 'Bollería', alergenos: ['Gluten', 'Lácteos', 'Huevos'] },
-  { id: 11, nombre: 'Cinnamon roll', descripcion: 'Rollo de canela con glaseado', precioSinIva: 2.55, iva: 10, disponible: true, activo: true, categoria: 'Bollería', alergenos: ['Gluten', 'Lácteos', 'Huevos'] },
-  { id: 12, nombre: 'Muffin de arándanos', descripcion: 'Bizcocho esponjoso con arándanos', precioSinIva: 2.27, iva: 10, disponible: false, activo: true, categoria: 'Bollería', alergenos: ['Gluten', 'Huevos'] },
-  { id: 13, nombre: 'Tostada de aguacate', descripcion: 'Pan de masa madre, aguacate y sésamo', precioSinIva: 4.09, iva: 10, disponible: true, activo: true, categoria: 'Tostadas y salados', alergenos: ['Gluten', 'Sésamo'] },
-  { id: 14, nombre: 'Sándwich mixto', descripcion: 'Jamón cocido y queso fundido', precioSinIva: 3.64, iva: 10, disponible: true, activo: true, categoria: 'Tostadas y salados', alergenos: ['Gluten', 'Lácteos'] },
-  { id: 15, nombre: 'Cold brew', descripcion: 'Infusionado en frío durante 16 horas', precioSinIva: 2.73, iva: 10, disponible: true, activo: true, categoria: 'Bebidas frías', alergenos: [] },
-  { id: 16, nombre: 'Zumo de naranja', descripcion: 'Naranja natural recién exprimida', precioSinIva: 2.73, iva: 10, disponible: true, activo: true, categoria: 'Bebidas frías', alergenos: [] },
-  { id: 17, nombre: 'Pumpkin spice latte', descripcion: 'Especial de otoño', precioSinIva: 3.18, iva: 10, disponible: false, activo: false, categoria: 'Temporada', alergenos: ['Lácteos'] },
+  { id: 1, nombre: 'Espresso', descripcion: 'Café de especialidad, tueste medio', precioSinIva: 1.27, iva: 10, disponible: true, activo: true, categoria: 'Cafés', alergenos: [], imagen: foto('1510591509098-f4fdc6d0ff04') },
+  { id: 2, nombre: 'Cortado', descripcion: 'Espresso con un toque de leche', precioSinIva: 1.36, iva: 10, disponible: true, activo: true, categoria: 'Cafés', alergenos: ['Lácteos'], imagen: foto('1559496417-e7f25cb247f3') },
+  { id: 3, nombre: 'Americano', descripcion: 'Espresso alargado con agua caliente', precioSinIva: 1.45, iva: 10, disponible: true, activo: true, categoria: 'Cafés', alergenos: [], imagen: foto('1514432324607-a09d9b4aefdd') },
+  { id: 4, nombre: 'Cappuccino', descripcion: 'Espresso, leche vaporizada y espuma', precioSinIva: 2.18, iva: 10, disponible: true, activo: true, categoria: 'Cafés', alergenos: ['Lácteos'], imagen: foto('1572442388796-11668a67e53d') },
+  { id: 5, nombre: 'Flat white', descripcion: 'Doble ristretto con leche sedosa', precioSinIva: 2.45, iva: 10, disponible: true, activo: true, categoria: 'Cafés', alergenos: ['Lácteos'], imagen: foto('1485808191679-5f86510681a2') },
+  { id: 6, nombre: 'Latte de avena', descripcion: 'Espresso con bebida de avena', precioSinIva: 2.55, iva: 10, disponible: false, activo: true, categoria: 'Cafés', alergenos: ['Gluten'], imagen: foto('1570968915860-54d5c301fa9f') },
+  { id: 7, nombre: 'Matcha latte', descripcion: 'Té matcha ceremonial con leche', precioSinIva: 3.0, iva: 10, disponible: true, activo: true, categoria: 'Tés e infusiones', alergenos: ['Lácteos'], imagen: foto('1515823064-d6e0c04616a7') },
+  { id: 8, nombre: 'Chai latte', descripcion: 'Té negro especiado con leche', precioSinIva: 2.82, iva: 10, disponible: true, activo: true, categoria: 'Tés e infusiones', alergenos: ['Lácteos'], imagen: foto('1594631252845-29fc4cc8cde9') },
+  { id: 9, nombre: 'Rooibos vainilla', descripcion: 'Infusión sin teína', precioSinIva: 1.82, iva: 10, disponible: true, activo: true, categoria: 'Tés e infusiones', alergenos: [], imagen: foto('1576092768241-dec231879fc3') },
+  { id: 10, nombre: 'Croissant de mantequilla', descripcion: 'Hojaldre artesano del día', precioSinIva: 1.64, iva: 10, disponible: true, activo: true, categoria: 'Bollería', alergenos: ['Gluten', 'Lácteos', 'Huevos'], imagen: foto('1555507036-ab1f4038808a') },
+  { id: 11, nombre: 'Cinnamon roll', descripcion: 'Rollo de canela con glaseado', precioSinIva: 2.55, iva: 10, disponible: true, activo: true, categoria: 'Bollería', alergenos: ['Gluten', 'Lácteos', 'Huevos'], imagen: foto('1509365465985-25d11c17e812') },
+  { id: 12, nombre: 'Muffin de arándanos', descripcion: 'Bizcocho esponjoso con arándanos', precioSinIva: 2.27, iva: 10, disponible: false, activo: true, categoria: 'Bollería', alergenos: ['Gluten', 'Huevos'], imagen: foto('1607958996333-41aef7caefaa') },
+  { id: 13, nombre: 'Tostada de aguacate', descripcion: 'Pan de masa madre, aguacate y sésamo', precioSinIva: 4.09, iva: 10, disponible: true, activo: true, categoria: 'Tostadas y salados', alergenos: ['Gluten', 'Sésamo'], imagen: foto('1588137378633-dea1336ce1e2') },
+  { id: 14, nombre: 'Sándwich mixto', descripcion: 'Jamón cocido y queso fundido', precioSinIva: 3.64, iva: 10, disponible: true, activo: true, categoria: 'Tostadas y salados', alergenos: ['Gluten', 'Lácteos'], imagen: foto('1528735602780-2552fd46c7af') },
+  { id: 15, nombre: 'Cold brew', descripcion: 'Infusionado en frío durante 16 horas', precioSinIva: 2.73, iva: 10, disponible: true, activo: true, categoria: 'Bebidas frías', alergenos: [], imagen: foto('1461023058943-07fcbe16d735') },
+  { id: 16, nombre: 'Zumo de naranja', descripcion: 'Naranja natural recién exprimida', precioSinIva: 2.73, iva: 10, disponible: true, activo: true, categoria: 'Bebidas frías', alergenos: [], imagen: foto('1600271886742-f049cd451bba') },
+  { id: 17, nombre: 'Pumpkin spice latte', descripcion: 'Especial de otoño', precioSinIva: 3.18, iva: 10, disponible: false, activo: false, categoria: 'Temporada', alergenos: ['Lácteos'], imagen: foto('1517701604599-bb29b565090c') },
 ];
 
 export const PEDIDOS: Pedido[] = [
@@ -123,6 +129,10 @@ export const PEDIDOS: Pedido[] = [
     ],
   },
 ];
+
+// ---------- Carta pública ----------
+// Favoritos de la casa: los más vendidos que hoy están disponibles
+export const DESTACADOS: Producto[] = [PRODUCTOS[3], PRODUCTOS[0], PRODUCTOS[9], PRODUCTOS[4], PRODUCTOS[12], PRODUCTOS[6]];
 
 // Pedidos que aparecen en el panel (pendientes, en preparación o listos)
 export const PEDIDOS_EN_CURSO: Pedido[] = PEDIDOS.slice(0, 5);

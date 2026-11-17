@@ -1,0 +1,103 @@
+:host {
+  display: block;
+}
+
+// Fila de carta: texto a la izquierda y foto pequeña a la derecha
+.card {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+h4 {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.descripcion {
+  margin-top: 2px;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.alergenos {
+  margin-top: 3px;
+  font-size: 11.5px;
+  color: var(--text-soft);
+}
+
+.precio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.sello {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--estado-cancelado);
+}
+
+.foto {
+  flex-shrink: 0;
+  width: 92px;
+  height: 92px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--bg-hover);
+}
+
+.foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: revelar 0.5s ease;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.card:hover .foto img {
+  transform: scale(1.06);
+}
+
+.inicial {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--text-soft);
+}
+
+// Producto agotado: atenuado y foto en gris
+.agotado h4,
+.agotado .precio {
+  color: var(--text-soft);
+}
+
+.agotado .foto img {
+  filter: grayscale(1);
+  opacity: 0.55;
+}
+
+@keyframes revelar {
+  from {
+    opacity: 0;
+  }
+}

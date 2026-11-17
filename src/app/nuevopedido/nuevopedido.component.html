@@ -1,68 +1,74 @@
 <div class="split">
-  <!-- GET /productos (solo activos, RN-01) -->
-  <section>
-    <div class="toolbar">
-      <div class="search">
-        <app-icon class="sm" name="search" />
-        <input class="input" placeholder="Buscar producto" />
+  @if (rol === 'CLIENTE') {
+    <section>
+      <app-carta [pedir]="true" />
+    </section>
+  } @else {
+    <!-- GET /productos (solo activos, RN-01) -->
+    <section>
+      <div class="toolbar">
+        <div class="search">
+          <app-icon class="sm" name="search" />
+          <input class="input" placeholder="Buscar producto" />
+        </div>
+        <select class="select" aria-label="Categoría">
+          <option>Todas las categorías</option>
+          <option>Cafés</option>
+          <option>Tés e infusiones</option>
+          <option>Bollería</option>
+          <option>Tostadas y salados</option>
+          <option>Bebidas frías</option>
+        </select>
       </div>
-      <select class="select" aria-label="Categoría">
-        <option>Todas las categorías</option>
-        <option>Cafés</option>
-        <option>Tés e infusiones</option>
-        <option>Bollería</option>
-        <option>Tostadas y salados</option>
-        <option>Bebidas frías</option>
-      </select>
-    </div>
 
-    <div class="table-wrap">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Producto</th>
-            <th>Categoría</th>
-            <th>Alérgenos</th>
-            <th class="num">Precio sin IVA</th>
-            <th class="actions"></th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (p of productos; track p.id) {
-            @if (p.activo) {
-              <tr>
-                <td class="col-main">
-                  <div>{{ p.nombre }}</div>
-                  <div class="muted small">{{ p.descripcion }}</div>
-                </td>
-                <td class="muted nowrap">{{ p.categoria }}</td>
-                <td>
-                  <div class="tags">
-                    @for (a of p.alergenos; track a) {
-                      <span class="tag">{{ a }}</span>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th>Categoría</th>
+              <th>Alérgenos</th>
+              <th class="num">Precio sin IVA</th>
+              <th class="actions"></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of productos; track p.id) {
+              @if (p.activo) {
+                <tr>
+                  <td class="col-main">
+                    <div>{{ p.nombre }}</div>
+                    <div class="muted small">{{ p.descripcion }}</div>
+                  </td>
+                  <td class="muted nowrap">{{ p.categoria }}</td>
+                  <td>
+                    <div class="tags">
+                      @for (a of p.alergenos; track a) {
+                        <span class="tag">{{ a }}</span>
+                      }
+                    </div>
+                  </td>
+                  <td class="num">{{ p.precioSinIva | currency: 'EUR' }} <span class="soft small">+{{ p.iva }}%</span></td>
+                  <td class="actions">
+                    @if (p.disponible) {
+                      <button class="btn">Añadir</button>
+                    } @else {
+                      <span class="agotado small">Agotado</span>
                     }
-                  </div>
-                </td>
-                <td class="num">{{ p.precioSinIva | currency: 'EUR' }} <span class="soft small">+{{ p.iva }}%</span></td>
-                <td class="actions">
-                  @if (p.disponible) {
-                    <button class="btn">Añadir</button>
-                  } @else {
-                    <span class="agotado small">Agotado</span>
-                  }
-                </td>
-              </tr>
+                  </td>
+                </tr>
+              }
             }
-          }
-        </tbody>
-      </table>
-    </div>
-  </section>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  }
 
   <!-- POST /pedidos/crear -->
   <aside class="ticket">
     <div class="section-head">
-      <h2>Pedido</h2>
+      <h2>{{ rol === 'CLIENTE' ? 'Tu pedido' : 'Pedido' }}</h2>
       <span class="spacer"></span>
       <span class="muted small">{{ ticket.lineas.length }} líneas</span>
     </div>

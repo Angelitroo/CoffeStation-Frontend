@@ -19,7 +19,9 @@
       @if (rol !== 'ADMIN') {
         <a class="nav-item" routerLink="/nuevo-pedido" routerLinkActive="active"><app-icon name="bag" /> Nuevo pedido</a>
       }
-      <a class="nav-item" routerLink="/productos" routerLinkActive="active"><app-icon name="coffee" /> Productos</a>
+      <a class="nav-item" routerLink="/productos" routerLinkActive="active">
+        <app-icon name="coffee" /> {{ rol === 'CLIENTE' ? 'Carta' : 'Productos' }}
+      </a>
       <a class="nav-item" routerLink="/categorias" routerLinkActive="active"><app-icon name="tag" /> Categorías</a>
     </nav>
 
@@ -33,6 +35,8 @@
 
     <span class="spacer"></span>
 
+    <!-- Volver a la carta pública (no requiere sesión) -->
+    <a routerLink="/" class="nav-item carta-publica"><app-icon name="eye" /> Ver carta pública</a>
     <a routerLink="/login" class="btn btn-block"><app-icon class="sm" name="logout" /> Cerrar sesión</a>
   </aside>
 
@@ -43,7 +47,7 @@
       <button class="icon-btn menu-btn" (click)="menuAbierto = true" aria-label="Abrir menú">
         <app-icon name="menu" />
       </button>
-      <h1>{{ pagina()['title'] }}</h1>
+      <h1>{{ (rol === 'CLIENTE' && pagina()['tituloCliente']) || pagina()['title'] }}</h1>
       <span class="spacer"></span>
 
       @let accion = pagina()['accion'];

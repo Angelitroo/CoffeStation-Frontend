@@ -1,13 +1,18 @@
 import { Routes } from '@angular/router';
 import { MenuizquierdaComponent } from './menuizquierda/menuizquierda.component';
 
-// data.title  → título de la cabecera
+// data.title  → título de la cabecera (data.tituloCliente, si existe, para el rol CLIENTE)
 // data.accion → botón principal de la cabecera; solo se muestra a los roles
 //               que el backend autoriza para esa operación (@PreAuthorize)
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
-
   // Pantallas públicas (sin layout)
+  {
+    path: '',
+    pathMatch: 'full',
+    title: 'Carta · CoffeStation',
+    loadComponent: () =>
+      import('./cartadigital/cartadigital.component').then((m) => m.CartadigitalComponent),
+  },
   {
     path: 'login',
     title: 'Iniciar sesión · CoffeStation',
@@ -58,6 +63,7 @@ export const routes: Routes = [
         title: 'Productos · CoffeStation',
         data: {
           title: 'Productos',
+          tituloCliente: 'Carta',
           accion: { texto: 'Nuevo producto', ruta: '/productos/nuevo', roles: ['ADMIN'] },
         },
         loadComponent: () =>

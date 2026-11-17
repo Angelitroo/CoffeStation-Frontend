@@ -3,7 +3,10 @@ tr:has(.agotado) td {
   color: var(--text-soft);
 }
 
-.ticket {
+// El ticket acompaña al desplazarse por la carta
+.split > .ticket {
+  align-self: start;
+  min-height: 0;
   position: sticky;
   top: calc(var(--topbar-height) + 24px);
   display: flex;
@@ -48,7 +51,7 @@ tr:has(.agotado) td {
 }
 
 @media (max-width: 1080px) {
-  .ticket {
+  .split > .ticket {
     position: static;
   }
 }

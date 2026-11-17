@@ -1,0 +1,72 @@
+<!-- ---------- Cabecera ---------- -->
+<header class="cabecera">
+  <div class="contenedor fila">
+    <a routerLink="/" class="marca">
+      <span class="brand-mark">C</span>
+      <span class="marca-nombre">CoffeStation</span>
+    </a>
+    <span class="spacer"></span>
+    <!-- Al panel de gestión siempre se entra por el login -->
+    <a routerLink="/login" class="entrar"><app-icon class="sm" name="user" /> Iniciar sesión</a>
+  </div>
+</header>
+
+<!-- ---------- Portada ---------- -->
+<section class="portada">
+  <img [src]="portada" alt="" class="portada-foto" />
+  <div class="contenedor portada-texto">
+    <p class="antetitulo">Cafetería de especialidad</p>
+    <h1>Nuestra carta</h1>
+    <p class="lema">Café recién molido, bollería artesana y algo rico para cada momento del día.</p>
+    <a routerLink="." fragment="carta" class="cta">Ver la carta <app-icon class="sm" name="down" /></a>
+  </div>
+</section>
+
+<main class="contenedor" id="carta">
+  <!-- ---------- Favoritos de la casa ---------- -->
+  <app-destacados />
+
+  <!-- ---------- Índice de categorías + búsqueda ---------- -->
+  <nav class="indice" aria-label="Categorías">
+    @if (buscando) {
+      <div class="buscador" animate.enter="buscador-entra">
+        <app-icon class="sm" name="search" />
+        <input placeholder="Buscar en la carta" aria-label="Buscar en la carta" />
+        <button type="button" class="icon-btn" (click)="buscando = false" aria-label="Cerrar búsqueda"><app-icon class="sm" name="x" /></button>
+      </div>
+    } @else {
+      <button type="button" class="icon-btn lupa" (click)="buscando = true" aria-label="Buscar"><app-icon class="sm" name="search" /></button>
+      <div class="categorias">
+        @for (c of categorias; track c.id; let primera = $first) {
+          @if (c.estado) {
+            <a routerLink="." fragment="cat-{{ c.id }}" class="categoria" [class.activa]="primera">{{ c.nombre }}</a>
+          }
+        }
+      </div>
+    }
+  </nav>
+
+  <!-- ---------- Secciones: solo categorías y productos activos (RN-01) ---------- -->
+  @for (c of categorias; track c.id) {
+    @if (c.estado) {
+      <section class="seccion" id="cat-{{ c.id }}">
+        <div class="titulo-bloque">
+          <h2>{{ c.nombre }}</h2>
+        </div>
+        <div class="rejilla">
+          @for (p of productos; track p.id) {
+            @if (p.activo && p.categoria === c.nombre) {
+              <app-productocard [producto]="p" />
+            }
+          }
+        </div>
+      </section>
+    }
+  }
+
+  <footer class="pie">
+    <span class="brand-mark">C</span>
+    <p>Precios con IVA incluido. Los alérgenos se indican junto a cada producto; si tienes dudas, pregunta a nuestro equipo.</p>
+    <a routerLink="/login" class="link">Acceso de empleados</a>
+  </footer>
+</main>

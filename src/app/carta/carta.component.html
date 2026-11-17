@@ -1,0 +1,55 @@
+<div class="carta">
+  <header class="intro">
+    <div>
+      <h2>Nuestra carta</h2>
+      <p class="muted">Precios con IVA incluido.</p>
+    </div>
+    @if (!pedir) {
+      <a routerLink="/nuevo-pedido" class="btn btn-primary">Hacer pedido</a>
+    }
+  </header>
+
+  <nav class="indice">
+    @for (c of categorias; track c.id) {
+      @if (c.estado) {
+        <a routerLink="." fragment="cat-{{ c.id }}">{{ c.nombre }}</a>
+      }
+    }
+  </nav>
+
+  @for (c of categorias; track c.id) {
+    <!-- Solo categorías activas y productos activos (RN-01) -->
+    @if (c.estado) {
+      <section class="seccion" id="cat-{{ c.id }}">
+        <h3>{{ c.nombre }}</h3>
+        <ul class="platos">
+          @for (p of productos; track p.id) {
+            @if (p.activo && p.categoria === c.nombre) {
+              <li class="plato">
+                <div class="linea">
+                  <span class="nombre">{{ p.nombre }}</span>
+                  <span class="puntos"></span>
+                  <span class="precio">{{ p | precioIva | currency: 'EUR' }}</span>
+                </div>
+                <p class="descripcion">{{ p.descripcion }}</p>
+                @if (p.alergenos.length || !p.disponible || pedir) {
+                  <div class="pie">
+                    @if (p.alergenos.length) {
+                      <span class="alergenos">Contiene {{ p.alergenos.join(', ').toLowerCase() }}</span>
+                    }
+                    <span class="spacer"></span>
+                    @if (!p.disponible) {
+                      <span class="agotado">Agotado</span>
+                    } @else if (pedir) {
+                      <button class="anadir"><app-icon class="xs" name="plus" /> Añadir</button>
+                    }
+                  </div>
+                }
+              </li>
+            }
+          }
+        </ul>
+      </section>
+    }
+  }
+</div>

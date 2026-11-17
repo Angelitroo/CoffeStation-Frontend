@@ -1,0 +1,17 @@
+<section class="destacados">
+  <div class="titulo-bloque">
+    <h2>Los favoritos de la casa</h2>
+    <p class="muted">Lo más pedido esta semana</p>
+  </div>
+  <div class="carrusel">
+    @for (p of destacados; track p.id; let i = $index) {
+      <article class="destacado" [style.animation-delay.ms]="i * 60">
+        <img [src]="p.imagen" [alt]="p.nombre" loading="lazy" />
+        <span class="destacado-texto">
+          <span class="destacado-nombre">{{ p.nombre }}</span>
+          <span class="destacado-precio">{{ p | precioIva | currency: 'EUR' }}</span>
+        </span>
+      </article>
+    }
+  </div>
+</section>

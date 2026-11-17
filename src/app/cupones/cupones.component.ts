@@ -1,12 +1,10 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { CUPONES } from '../mocks/mock-data';
-import { IconComponent } from '../icon/icon.component';
-import { StatcardComponent } from '../statcard/statcard.component';
 
 @Component({
   selector: 'app-cupones',
-  imports: [CurrencyPipe, DatePipe, IconComponent, StatcardComponent],
+  imports: [CurrencyPipe, DatePipe],
   templateUrl: './cupones.component.html',
   styleUrl: './cupones.component.scss',
 })

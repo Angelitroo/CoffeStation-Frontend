@@ -1,77 +1,102 @@
-<div class="tpv">
-  <section class="page">
-    <div class="row filtros">
-      <div class="input-icon buscador">
+<div class="split">
+  <!-- GET /productos (solo activos, RN-01) -->
+  <section>
+    <div class="toolbar">
+      <div class="search">
         <app-icon class="sm" name="search" />
-        <input class="input" placeholder="Buscar producto…" />
+        <input class="input" placeholder="Buscar producto" />
       </div>
-      <div class="segmented">
-        <button class="active">Todo</button>
-        <button>Cafés</button>
-        <button>Tés e infusiones</button>
-        <button>Bollería</button>
-        <button>Tostadas y salados</button>
-        <button>Bebidas frías</button>
-      </div>
+      <select class="select" aria-label="Categoría">
+        <option>Todas las categorías</option>
+        <option>Cafés</option>
+        <option>Tés e infusiones</option>
+        <option>Bollería</option>
+        <option>Tostadas y salados</option>
+        <option>Bebidas frías</option>
+      </select>
     </div>
 
-    <div class="productos">
-      @for (p of productos; track p.id) {
-        <button class="card producto" [disabled]="!p.disponible">
-          <div class="row">
-            <span class="text-small text-muted">{{ p.categoria }}</span>
-            <span class="spacer"></span>
-            @if (!p.disponible) {
-              <span class="badge">Agotado</span>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Categoría</th>
+            <th>Alérgenos</th>
+            <th class="num">Precio sin IVA</th>
+            <th class="actions"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of productos; track p.id) {
+            @if (p.activo) {
+              <tr>
+                <td class="col-main">
+                  <div>{{ p.nombre }}</div>
+                  <div class="muted small">{{ p.descripcion }}</div>
+                </td>
+                <td class="muted nowrap">{{ p.categoria }}</td>
+                <td>
+                  <div class="tags">
+                    @for (a of p.alergenos; track a) {
+                      <span class="tag">{{ a }}</span>
+                    }
+                  </div>
+                </td>
+                <td class="num">{{ p.precioSinIva | currency: 'EUR' }} <span class="soft small">+{{ p.iva }}%</span></td>
+                <td class="actions">
+                  @if (p.disponible) {
+                    <button class="btn">Añadir</button>
+                  } @else {
+                    <span class="agotado small">Agotado</span>
+                  }
+                </td>
+              </tr>
             }
-          </div>
-          <div class="strong nombre">{{ p.nombre }}</div>
-          <div class="text-small text-muted">{{ p.descripcion }}</div>
-          <div class="row pie">
-            <span class="precio">{{ p.pvp | currency: 'EUR' }}</span>
-            <span class="spacer"></span>
-            <span class="add"><app-icon class="sm" name="plus" /></span>
-          </div>
-        </button>
-      }
+          }
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <aside class="card ticket">
-    <div class="card-header">
-      <div>
-        <div class="card-title">Pedido actual</div>
-        <div class="card-subtitle">Turno #49</div>
-      </div>
+  <!-- POST /pedidos/crear -->
+  <aside class="ticket">
+    <div class="section-head">
+      <h2>Pedido</h2>
+      <span class="spacer"></span>
+      <span class="muted small">{{ ticket.lineas.length }} líneas</span>
     </div>
 
-    <div class="card-body lineas">
+    <ul class="lineas">
       @for (l of ticket.lineas; track $index) {
-        <div class="linea">
-          <div class="strong">{{ l.producto }}</div>
-          <div class="cantidad">
-            <button class="btn btn-outline btn-icon"><app-icon class="xs" name="minus" /></button>
-            <span class="strong">{{ l.cantidad }}</span>
-            <button class="btn btn-outline btn-icon"><app-icon class="xs" name="plus" /></button>
-          </div>
-          <span class="num strong">{{ l.total | currency: 'EUR' }}</span>
-        </div>
+        <li>
+          <span class="nombre">{{ l.producto }}</span>
+          <span class="cantidad">
+            <button class="icon-btn" aria-label="Quitar uno"><app-icon class="xs" name="minus" /></button>
+            {{ l.cantidad }}
+            <button class="icon-btn" aria-label="Añadir uno"><app-icon class="xs" name="plus" /></button>
+          </span>
+          <span class="num">{{ l.total | currency: 'EUR' }}</span>
+        </li>
       }
-    </div>
+    </ul>
 
-    <div class="card-body cupon">
-      <label class="label" for="cupon">Cupón de descuento</label>
+    <!-- GET /cupones/validar/{codigo}?subtotal= -->
+    <div class="field cupon">
+      <label for="cupon">Cupón</label>
       <div class="row">
-        <input id="cupon" class="input" placeholder="BIENVENIDA10" />
-        <button class="btn btn-outline">Aplicar</button>
+        <input id="cupon" class="input code" placeholder="Código" />
+        <button class="btn">Validar</button>
       </div>
     </div>
 
-    <div class="card-body summary">
-      <div class="row"><span class="text-muted">Base imponible</span><span class="num">{{ ticket.baseImponible | currency: 'EUR' }}</span></div>
-      <div class="row"><span class="text-muted">Subtotal (IVA incl.)</span><span class="num">{{ ticket.subtotal | currency: 'EUR' }}</span></div>
+    <div class="totals">
+      <div class="row"><span class="muted">Base imponible</span><span class="num">{{ ticket.baseImponible | currency: 'EUR' }}</span></div>
+      <div class="row"><span class="muted">Subtotal (IVA incl.)</span><span class="num">{{ ticket.subtotal | currency: 'EUR' }}</span></div>
       <div class="row total"><span>Total</span><span class="num">{{ ticket.subtotal | currency: 'EUR' }}</span></div>
-      <button class="btn btn-primary btn-block">Confirmar pedido</button>
     </div>
+
+    <button class="btn btn-primary btn-block">Confirmar pedido</button>
+    <p class="hint">Máximo 15 líneas y 20 unidades por línea.</p>
   </aside>
 </div>

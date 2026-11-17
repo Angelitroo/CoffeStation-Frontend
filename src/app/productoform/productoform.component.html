@@ -1,37 +1,23 @@
-<div class="page form-page">
-  <div class="row">
-    <a routerLink="/productos" class="btn btn-outline btn-sm"><app-icon class="sm" name="back" /> Volver a productos</a>
-  </div>
+<!-- POST /productos/crear · PUT /productos/actualizar/{id} (ADMIN) -->
+<form class="formulario">
+  <a routerLink="/productos" class="muted small row volver"><app-icon class="sm" name="back" /> Productos</a>
 
-  <div class="card">
-    <div class="card-header">
-      <div>
-        <div class="card-title">Datos del producto</div>
-        <div class="card-subtitle">Información visible en la carta</div>
-      </div>
+  <div class="bloque">
+    <div class="explicacion">
+      <h2>Datos generales</h2>
+      <p class="muted small">Nombre y descripción que se muestran en la carta.</p>
     </div>
-    <div class="card-body form-grid">
-      <div class="field full">
+    <div class="campos">
+      <div class="field">
         <label for="nombre">Nombre</label>
-        <input id="nombre" class="input" placeholder="Ej. Cappuccino" />
+        <input id="nombre" class="input" maxlength="150" />
       </div>
-      <div class="field full">
+      <div class="field">
         <label for="descripcion">Descripción</label>
-        <textarea id="descripcion" class="textarea" placeholder="Breve descripción (máx. 150 caracteres)"></textarea>
+        <textarea id="descripcion" class="textarea" maxlength="150"></textarea>
+        <span class="hint">Máximo 150 caracteres.</span>
       </div>
       <div class="field">
-        <label for="precio">Precio sin IVA (€)</label>
-        <input id="precio" type="number" step="0.01" class="input" placeholder="0,00" />
-      </div>
-      <div class="field">
-        <label for="iva">IVA</label>
-        <select id="iva" class="select">
-          <option>4%</option>
-          <option selected>10%</option>
-          <option>21%</option>
-        </select>
-      </div>
-      <div class="field full">
         <label for="categoria">Categoría</label>
         <select id="categoria" class="select">
           @for (c of categorias; track c.id) {
@@ -42,44 +28,51 @@
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-header">
-      <div>
-        <div class="card-title">Alérgenos</div>
-        <div class="card-subtitle">Selecciona los alérgenos que contiene</div>
+  <div class="bloque">
+    <div class="explicacion">
+      <h2>Precio</h2>
+      <p class="muted small">El precio se guarda sin IVA.</p>
+    </div>
+    <div class="campos dos">
+      <div class="field">
+        <label for="precio">Precio sin IVA (€)</label>
+        <input id="precio" type="number" step="0.01" min="0" class="input" />
+      </div>
+      <div class="field">
+        <label for="iva">IVA (%)</label>
+        <select id="iva" class="select">
+          <option>4</option>
+          <option selected>10</option>
+          <option>21</option>
+        </select>
       </div>
     </div>
-    <div class="card-body alergenos">
+  </div>
+
+  <div class="bloque">
+    <div class="explicacion">
+      <h2>Alérgenos</h2>
+      <p class="muted small">Marca los que contiene el producto.</p>
+    </div>
+    <div class="campos alergenos">
       @for (a of alergenos; track a.id) {
-        <label class="alergeno">
-          <input type="checkbox" />
-          {{ a.nombre }}
-        </label>
+        <label class="checkbox"><input type="checkbox" /> {{ a.nombre }}</label>
       }
     </div>
   </div>
 
-  <div class="card">
-    <div class="card-body opciones">
-      <div class="row">
-        <label class="switch"><input type="checkbox" checked aria-label="Disponible" /><span></span></label>
-        <div>
-          <div class="strong">Disponible</div>
-          <div class="text-small text-muted">Puede pedirse en este momento</div>
-        </div>
-      </div>
-      <div class="row">
-        <label class="switch"><input type="checkbox" checked aria-label="Activo" /><span></span></label>
-        <div>
-          <div class="strong">Activo</div>
-          <div class="text-small text-muted">Aparece en la carta</div>
-        </div>
-      </div>
+  <div class="bloque">
+    <div class="explicacion">
+      <h2>Estado</h2>
     </div>
-    <div class="card-footer">
-      <span class="spacer"></span>
-      <a routerLink="/productos" class="btn btn-outline">Cancelar</a>
-      <a routerLink="/productos" class="btn btn-primary">Guardar</a>
+    <div class="campos">
+      <label class="checkbox"><input type="checkbox" checked /> Disponible para pedir</label>
+      <label class="checkbox"><input type="checkbox" checked /> Activo en la carta</label>
     </div>
   </div>
-</div>
+
+  <div class="pie">
+    <a routerLink="/productos" class="btn">Cancelar</a>
+    <a routerLink="/productos" class="btn btn-primary">Guardar producto</a>
+  </div>
+</form>

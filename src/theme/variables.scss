@@ -1,36 +1,29 @@
 // Paleta y medidas de CoffeStation
+// Neutra y monocroma: un único tono oscuro para acciones y estados activos.
 :root {
-  --bg: #f7f3ee;
-  --surface: #ffffff;
-  --surface-2: #fbf8f4;
-  --border: #ece4da;
-  --border-strong: #ddd1c3;
+  --bg: #ffffff;
+  --bg-subtle: #f6f6f4;
+  --bg-hover: #efefec;
+  --border: #e5e4e1;
+  --border-strong: #cfcdc9;
 
-  --text: #2b211b;
-  --text-muted: #85766a;
-  --text-soft: #a99a8d;
+  --text: #1d1c1a;
+  --text-muted: #6c6a66;
+  --text-soft: #9b9893;
 
-  --primary: #6f4e37;
-  --primary-strong: #573b29;
-  --primary-soft: #f2e8de;
-  --accent: #c08a5b;
+  --primary: #2a2623;
+  --primary-hover: #000000;
 
-  --success: #4f7a55;
-  --success-soft: #e7efe5;
-  --warning: #a87522;
-  --warning-soft: #f8eedb;
-  --info: #94643e;
-  --info-soft: #f4e6d8;
-  --danger: #a4483e;
-  --danger-soft: #f6e4e0;
+  // Colores de estado: solo se usan en el punto de cada etiqueta
+  --estado-pendiente: #c2892f;
+  --estado-preparacion: #7b5a3c;
+  --estado-listo: #3f7a4e;
+  --estado-entregado: #a3a09b;
+  --estado-cancelado: #b4473b;
 
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 16px;
-  --shadow: 0 1px 2px rgba(60, 40, 25, 0.04), 0 2px 8px rgba(60, 40, 25, 0.04);
-
+  --radius: 4px;
   --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-display: 'Fraunces', Georgia, serif;
 
-  --sidebar-width: 248px;
+  --sidebar-width: 232px;
+  --topbar-height: 56px;
 }

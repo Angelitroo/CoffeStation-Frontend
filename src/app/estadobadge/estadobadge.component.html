@@ -1,17 +1,17 @@
 @switch (estado) {
   @case ('PENDIENTE') {
-    <span class="badge badge-warning">Pendiente</span>
+    <span class="status pendiente">Pendiente</span>
   }
   @case ('EN_PREPARACION') {
-    <span class="badge badge-info">En preparación</span>
+    <span class="status preparacion">En preparación</span>
   }
   @case ('LISTO') {
-    <span class="badge badge-success">Listo</span>
+    <span class="status listo">Listo</span>
   }
   @case ('ENTREGADO') {
-    <span class="badge">Entregado</span>
+    <span class="status entregado">Entregado</span>
   }
   @case ('CANCELADO') {
-    <span class="badge badge-danger">Cancelado</span>
+    <span class="status cancelado">Cancelado</span>
   }
 }

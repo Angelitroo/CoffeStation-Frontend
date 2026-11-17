@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Data, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter, map, tap } from 'rxjs';
+import { ROL_ACTUAL } from '../mocks/mock-data';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
@@ -13,10 +14,12 @@ import { IconComponent } from '../icon/icon.component';
 export class MenuizquierdaComponent {
   private router = inject(Router);
 
+  rol = ROL_ACTUAL;
+
   // Menú lateral en móvil
   menuAbierto = false;
 
-  // Título y subtítulo de la vista actual, definidos en el "data" de cada ruta
+  // Título de la vista actual, definido en el "data" de cada ruta
   pagina = toSignal(
     this.router.events.pipe(
       filter((e) => e instanceof NavigationEnd),

@@ -1,7 +1,7 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PEDIDO_EJEMPLO } from '../mocks/mock-data';
+import { PEDIDO_EJEMPLO, ROL_ACTUAL } from '../mocks/mock-data';
 import { EstadobadgeComponent } from '../estadobadge/estadobadge.component';
 import { IconComponent } from '../icon/icon.component';
 
@@ -12,5 +12,6 @@ import { IconComponent } from '../icon/icon.component';
   styleUrl: './pedidodetalle.component.scss',
 })
 export class PedidodetalleComponent {
+  rol = ROL_ACTUAL;
   pedido = PEDIDO_EJEMPLO;
 }

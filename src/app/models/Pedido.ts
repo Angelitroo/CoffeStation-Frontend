@@ -9,7 +9,7 @@ export interface Pedido {
   subtotal: number;
   total: number;
   estado: EstadoPedido;
-  cupon?: string;
+  cupon?: string; // código del Cupon aplicado
   descuento?: number; // importe de la entidad Descuento asociada
   lineas: LineaPedido[];
 }

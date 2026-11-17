@@ -1,65 +1,67 @@
-<div class="card">
-  <div class="toolbar">
-    <div class="segmented">
-      <button class="active">Todos</button>
-      <button>Pendiente</button>
-      <button>En preparación</button>
-      <button>Listo</button>
-      <button>Entregado</button>
-      <button>Cancelado</button>
-    </div>
-    <span class="spacer"></span>
-    <input type="date" class="input" value="2026-11-17" aria-label="Fecha" />
-    <a routerLink="/nuevo-pedido" class="btn btn-primary"><app-icon class="sm" name="plus" /> Nuevo pedido</a>
-  </div>
+<!-- GET /pedidos?fecha=&estado=&page= -->
+<div class="toolbar">
+  <select class="select" aria-label="Estado">
+    <option>Todos los estados</option>
+    <option>Pendiente</option>
+    <option>En preparación</option>
+    <option>Listo</option>
+    <option>Entregado</option>
+    <option>Cancelado</option>
+  </select>
+  <input type="date" class="input" value="2026-11-17" aria-label="Fecha" />
+</div>
 
-  <div class="table-wrap">
-    <table class="table">
-      <thead>
+<div class="table-wrap">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Turno</th>
+        <th>Fecha</th>
+        <th class="num">Base imponible</th>
+        <th class="num">Subtotal</th>
+        <th class="num">Total</th>
+        <th>Cupón</th>
+        <th>Estado</th>
+        <th class="actions">Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (p of pedidos; track p.id) {
         <tr>
-          <th>Turno</th>
-          <th>Fecha</th>
-          <th class="num">Base imponible</th>
-          <th class="num">Subtotal</th>
-          <th class="num">Total</th>
-          <th>Cupón</th>
-          <th>Estado</th>
-          <th></th>
+          <td class="strong">#{{ p.numeroTurno }}</td>
+          <td class="muted nowrap">{{ p.fecha | date: 'dd/MM/yy HH:mm' }}</td>
+          <td class="num">{{ p.baseImponible | currency: 'EUR' }}</td>
+          <td class="num">{{ p.subtotal | currency: 'EUR' }}</td>
+          <td class="num strong">{{ p.total | currency: 'EUR' }}</td>
+          <td>
+            @if (p.cupon) {
+              <span class="code">{{ p.cupon }}</span>
+            } @else {
+              <span class="soft">—</span>
+            }
+          </td>
+          <td><app-estadobadge [estado]="p.estado" /></td>
+          <td class="actions">
+            <a routerLink="/pedidos/{{ p.id }}" class="icon-btn" title="Ver detalle"><app-icon class="sm" name="eye" /></a>
+            @if (rol === 'ADMIN') {
+              <button class="icon-btn" title="Eliminar pedido"><app-icon class="sm" name="trash" /></button>
+            }
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        @for (p of pedidos; track p.id) {
-          <tr>
-            <td class="strong">#{{ p.numeroTurno }}</td>
-            <td class="text-muted nowrap">{{ p.fecha | date: 'dd/MM/yyyy · HH:mm' }}</td>
-            <td class="num">{{ p.baseImponible | currency: 'EUR' }}</td>
-            <td class="num">{{ p.subtotal | currency: 'EUR' }}</td>
-            <td class="num strong">{{ p.total | currency: 'EUR' }}</td>
-            <td>
-              @if (p.cupon) {
-                <span class="chip">{{ p.cupon }}</span>
-              } @else {
-                <span class="text-soft">—</span>
-              }
-            </td>
-            <td><app-estadobadge [estado]="p.estado" /></td>
-            <td class="actions">
-              <a routerLink="/pedidos/{{ p.id }}" class="btn btn-ghost btn-sm"><app-icon class="sm" name="eye" /> Ver</a>
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+      }
+    </tbody>
+  </table>
+</div>
 
-  <div class="card-footer">
-    Mostrando 1–10 de 48 pedidos
-    <div class="pagination">
-      <button class="active">1</button>
-      <button>2</button>
-      <button>3</button>
-      <button>4</button>
-      <button>5</button>
-    </div>
+<div class="table-foot">
+  <span class="muted">48 resultados</span>
+  <div class="pagination">
+    <button aria-label="Anterior">‹</button>
+    <button class="current">1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>5</button>
+    <button aria-label="Siguiente">›</button>
   </div>
 </div>

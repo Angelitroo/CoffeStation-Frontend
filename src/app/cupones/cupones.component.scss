@@ -1,18 +1,41 @@
-.codigo {
-  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
-  letter-spacing: 0.02em;
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
+.formulario .section-head {
+  margin-bottom: 0;
+}
+
+.dos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.usos-num {
+  font-variant-numeric: tabular-nums;
+}
+
+// Barra fina con la proporción de usos del ejemplo
 .usos {
-  width: 90px;
-  height: 5px;
+  display: block;
+  width: 72px;
+  height: 3px;
   margin-top: 4px;
+  background: var(--border);
 }
 
-// Porcentaje de usos de cada cupón del ejemplo
-tbody tr:nth-child(1) .bar-fill { width: 43%; }
-tbody tr:nth-child(2) .bar-fill { width: 44%; }
-tbody tr:nth-child(3) .bar-fill { width: 33%; }
-tbody tr:nth-child(4) .bar-fill { width: 0; }
-tbody tr:nth-child(5) .bar-fill { width: 100%; }
-tbody tr:nth-child(6) .bar-fill { width: 78%; }
+.usos span {
+  display: block;
+  height: 100%;
+  background: var(--primary);
+}
+
+tbody tr:nth-child(1) .usos span { width: 43%; }
+tbody tr:nth-child(2) .usos span { width: 44%; }
+tbody tr:nth-child(3) .usos span { width: 33%; }
+tbody tr:nth-child(4) .usos span { width: 0; }
+tbody tr:nth-child(5) .usos span { width: 100%; }
+tbody tr:nth-child(6) .usos span { width: 78%; }

@@ -8,8 +8,7 @@ export interface Cupon {
   fechaInicio: string;
   fechaFin: string;
   maxUsos: number;
-  usos: number;
+  usos: number; // GET /cupones/usos/{codigo}
   importeMinimo?: number;
-  cliente?: string;
-  estado: 'VIGENTE' | 'PROGRAMADO' | 'AGOTADO' | 'CADUCADO'; // estado visual
+  cliente?: string; // nombre del Cliente asociado (cupón personal)
 }

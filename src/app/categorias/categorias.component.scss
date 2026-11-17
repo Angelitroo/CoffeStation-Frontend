@@ -1,27 +1,7 @@
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 18px;
+.categorias {
+  max-width: 720px;
 }
 
-.categoria {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  padding: 22px;
-}
-
-.icono {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: var(--primary-soft);
-  color: var(--primary);
-}
-
-.pie {
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
+.nota {
+  margin-top: 12px;
 }

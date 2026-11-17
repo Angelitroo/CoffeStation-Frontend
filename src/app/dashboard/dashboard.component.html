@@ -1,68 +1,72 @@
-<div class="page">
-  <section class="grid-stats">
-    <app-statcard label="Pedidos hoy" value="48" icon="pedidos" hint="+12% respecto al martes pasado" />
-    <app-statcard label="Ventas totales" value="318,40 €" icon="euro" hint="IVA incluido" />
-    <app-statcard label="Base imponible" value="289,45 €" icon="percent" hint="Sin IVA" />
-    <app-statcard label="Ticket medio" value="6,63 €" icon="trending" hint="Por pedido" />
+<!-- GET /informe/resumen/{fecha} -->
+<div class="figures">
+  <div class="figure">
+    <div class="muted small">Pedidos</div>
+    <div class="value">48</div>
+  </div>
+  <div class="figure">
+    <div class="muted small">Total facturado</div>
+    <div class="value">318,40 €</div>
+  </div>
+  <div class="figure">
+    <div class="muted small">Base imponible</div>
+    <div class="value">289,45 €</div>
+  </div>
+  <div class="figure">
+    <div class="muted small">Ticket medio</div>
+    <div class="value">6,63 €</div>
+  </div>
+</div>
+
+<div class="split bloque">
+  <section>
+    <div class="section-head">
+      <h2>Pedidos en curso</h2>
+      <span class="spacer"></span>
+      <a routerLink="/pedidos" class="link small">Ver todos</a>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Turno</th>
+            <th>Hora</th>
+            <th class="num">Líneas</th>
+            <th class="num">Total</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of pedidos; track p.id) {
+            <tr>
+              <td><a routerLink="/pedidos/{{ p.id }}" class="strong link">#{{ p.numeroTurno }}</a></td>
+              <td class="muted">{{ p.fecha | date: 'HH:mm' }}</td>
+              <td class="num">{{ p.lineas.length }}</td>
+              <td class="num">{{ p.total | currency: 'EUR' }}</td>
+              <td><app-estadobadge [estado]="p.estado" /></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </section>
 
-  <section class="grid-main">
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Pedidos en curso</div>
-          <div class="card-subtitle">Pendientes de entregar</div>
-        </div>
-        <span class="spacer"></span>
-        <a routerLink="/pedidos" class="btn btn-ghost btn-sm">Ver todos <app-icon class="sm" name="chevron" /></a>
-      </div>
-      <div class="table-wrap">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Turno</th>
-              <th>Hora</th>
-              <th>Líneas</th>
-              <th class="num">Total</th>
-              <th>Estado</th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (p of pedidos; track p.id) {
-              <tr>
-                <td class="strong"><a routerLink="/pedidos/{{ p.id }}">#{{ p.numeroTurno }}</a></td>
-                <td class="text-muted">{{ p.fecha | date: 'HH:mm' }}</td>
-                <td class="text-muted">{{ p.lineas.length }}</td>
-                <td class="num strong">{{ p.total | currency: 'EUR' }}</td>
-                <td><app-estadobadge [estado]="p.estado" /></td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+  <!-- GET /informe/ranking -->
+  <section>
+    <div class="section-head">
+      <h2>Más vendidos</h2>
+      <span class="spacer"></span>
+      <span class="muted small">Noviembre</span>
     </div>
-
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Más vendidos</div>
-          <div class="card-subtitle">Unidades vendidas este mes</div>
-        </div>
-      </div>
-      <ol class="card-body bar-list">
-        @for (r of ranking; track r.id) {
-          <li class="bar-item">
-            <div class="row">
-              <span class="nombre">{{ r.nombre }}</span>
-              <span class="strong num">{{ r.cantidad }}</span>
-            </div>
-            <div class="bar-track"><div class="bar-fill"></div></div>
-          </li>
-        }
-      </ol>
-      <div class="card-footer">
-        <a routerLink="/informes">Ver informe completo</a>
-      </div>
-    </div>
+    <ol class="ranking">
+      @for (r of ranking; track r.id) {
+        <li>
+          <span>{{ r.nombre }}</span>
+          <span class="num">{{ r.cantidad }}</span>
+          <span class="bar"><span></span></span>
+        </li>
+      }
+    </ol>
+    <a routerLink="/informes" class="link small">Ver informes</a>
   </section>
 </div>

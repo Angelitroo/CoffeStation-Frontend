@@ -1,63 +1,58 @@
-<div class="page">
-  <div class="card">
-    <div class="card-header">
-      <div>
-        <div class="card-title">Resumen del día</div>
-        <div class="card-subtitle">Pedidos e importes de la fecha seleccionada</div>
-      </div>
-      <span class="spacer"></span>
-      <input type="date" class="input fecha" value="2026-11-17" aria-label="Fecha del resumen" />
-    </div>
-    <div class="card-body grid-stats">
-      <app-statcard label="Pedidos" value="48" icon="pedidos" />
-      <app-statcard label="Base imponible" value="289,45 €" icon="percent" hint="Sin IVA" />
-      <app-statcard label="Total facturado" value="318,40 €" icon="euro" hint="IVA incluido" />
-    </div>
+<!-- GET /informe/resumen/{fecha} -->
+<div class="section-head">
+  <h2>Resumen del día</h2>
+  <span class="spacer"></span>
+  <input type="date" class="input" value="2026-11-17" aria-label="Fecha" />
+</div>
+<div class="figures">
+  <div class="figure">
+    <div class="muted small">Pedidos</div>
+    <div class="value">48</div>
   </div>
+  <div class="figure">
+    <div class="muted small">Base imponible</div>
+    <div class="value">289,45 €</div>
+  </div>
+  <div class="figure">
+    <div class="muted small">Total</div>
+    <div class="value">318,40 €</div>
+  </div>
+</div>
 
-  <section class="grid-main">
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Ventas de los últimos 7 días</div>
-          <div class="card-subtitle">Total facturado por día</div>
-        </div>
-      </div>
-      <div class="card-body chart">
-        @for (d of semana; track d.fecha) {
-          <div class="col">
-            <span class="text-small text-muted">{{ d.total | currency: 'EUR' : 'symbol' : '1.0-0' }}</span>
-            <div class="col-area">
-              <div class="col-bar"></div>
-            </div>
-            <span class="text-small strong">{{ d.fecha | date: 'EEE d' }}</span>
-          </div>
-        }
-      </div>
+<div class="split bloque">
+  <section>
+    <div class="section-head">
+      <h2>Últimos 7 días</h2>
+      <span class="spacer"></span>
+      <span class="muted small">Total facturado</span>
     </div>
+    <div class="chart">
+      @for (d of semana; track d.fecha) {
+        <div class="col">
+          <span class="muted small">{{ d.total | currency: 'EUR' : 'symbol' : '1.0-0' }}</span>
+          <div class="area"><div class="columna"></div></div>
+          <span class="small">{{ d.fecha | date: 'EEE d' }}</span>
+        </div>
+      }
+    </div>
+  </section>
 
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Productos más vendidos</div>
-          <div class="card-subtitle">Unidades por periodo</div>
-        </div>
-      </div>
-      <div class="card-body rango">
-        <input type="date" class="input" value="2026-11-01" aria-label="Desde" />
-        <input type="date" class="input" value="2026-11-17" aria-label="Hasta" />
-      </div>
-      <ol class="card-body bar-list">
-        @for (r of ranking; track r.id) {
-          <li class="bar-item">
-            <div class="row">
-              <span class="nombre">{{ r.nombre }}</span>
-              <span class="strong num">{{ r.cantidad }} uds.</span>
-            </div>
-            <div class="bar-track"><div class="bar-fill"></div></div>
-          </li>
-        }
-      </ol>
+  <!-- GET /informe/ranking?fechaMinima=&fechaMaxima= -->
+  <section>
+    <div class="section-head"><h2>Más vendidos</h2></div>
+    <div class="row rango">
+      <input type="date" class="input" value="2026-11-01" aria-label="Desde" />
+      <span class="soft">–</span>
+      <input type="date" class="input" value="2026-11-17" aria-label="Hasta" />
     </div>
+    <ol class="ranking">
+      @for (r of ranking; track r.id) {
+        <li>
+          <span>{{ r.nombre }}</span>
+          <span class="num">{{ r.cantidad }}</span>
+          <span class="bar"><span></span></span>
+        </li>
+      }
+    </ol>
   </section>
 </div>

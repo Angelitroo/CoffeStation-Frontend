@@ -1,11 +1,33 @@
-.estados {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 24px;
 }
 
-.estados .actual {
-  background: var(--primary-soft);
-  border-color: var(--accent);
-  color: var(--primary);
+.cabecera a {
+  width: fit-content;
+}
+
+.titulo h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.importes {
+  width: 300px;
+  max-width: 100%;
+  margin: 18px 12px 0 auto;
+}
+
+.acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.peligro {
+  margin-top: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
 }

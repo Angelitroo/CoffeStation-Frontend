@@ -1,27 +1,38 @@
-<div class="grid">
-  @for (c of categorias; track c.id) {
-    <article class="card categoria">
-      <div class="row">
-        <span class="icono"><app-icon name="tag" /></span>
-        <div class="card-title">{{ c.nombre }}</div>
-        <span class="spacer"></span>
-        @if (c.estado) {
-          <span class="badge badge-success">Activa</span>
-        } @else {
-          <span class="badge">Inactiva</span>
+<!-- GET /categorias -->
+<div class="table-wrap categorias">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Categoría</th>
+        <th>Estado</th>
+        @if (rol !== 'CLIENTE') {
+          <th>Productos disponibles</th>
         }
-      </div>
-
-      <div class="row pie">
-        <div>
-          <div class="strong">Disponibilidad</div>
-          <div class="text-small text-muted">Activa o agota todos sus productos</div>
-        </div>
-        <span class="spacer"></span>
-        <label class="switch">
-          <input type="checkbox" [checked]="c.estado" aria-label="Disponibilidad de la categoría" /><span></span>
-        </label>
-      </div>
-    </article>
-  }
+      </tr>
+    </thead>
+    <tbody>
+      @for (c of categorias; track c.id) {
+        <tr>
+          <td>{{ c.nombre }}</td>
+          <td>
+            @if (c.estado) {
+              <span class="status listo">Activa</span>
+            } @else {
+              <span class="status">Inactiva</span>
+            }
+          </td>
+          @if (rol !== 'CLIENTE') {
+            <!-- PATCH /categorias/actualizar/disponibilidad/{id} (ADMIN, BARISTA) -->
+            <td>
+              <label class="switch"><input type="checkbox" [checked]="c.estado" aria-label="Disponibilidad de {{ c.nombre }}" /><span></span></label>
+            </td>
+          }
+        </tr>
+      }
+    </tbody>
+  </table>
 </div>
+
+@if (rol !== 'CLIENTE') {
+  <p class="hint nota">Desactivar la disponibilidad marca como agotados todos los productos de la categoría.</p>
+}

@@ -4,7 +4,6 @@ export interface Producto {
   descripcion: string;
   precioSinIva: number;
   iva: number;
-  pvp: number; // precio con IVA, para mostrar en la carta
   disponible: boolean;
   activo: boolean;
   categoria: string;

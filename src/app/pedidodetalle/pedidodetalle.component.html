@@ -1,72 +1,76 @@
-<div class="page">
-  <div class="row">
-    <a routerLink="/pedidos" class="btn btn-outline btn-sm"><app-icon class="sm" name="back" /> Volver a pedidos</a>
-    <span class="spacer"></span>
-    <button class="btn btn-danger btn-sm"><app-icon class="sm" name="trash" /> Eliminar pedido</button>
+<!-- GET /pedidos/{id} -->
+<div class="cabecera">
+  <a routerLink="/pedidos" class="muted small row"><app-icon class="sm" name="back" /> Pedidos</a>
+  <div class="row titulo">
+    <h2>Turno #{{ pedido.numeroTurno }}</h2>
+    <app-estadobadge [estado]="pedido.estado" />
   </div>
+  <p class="muted small">Pedido {{ pedido.id }} · {{ pedido.fecha | date: "d 'de' MMMM yyyy, HH:mm" }}</p>
+</div>
 
-  <section class="grid-main">
-    <div class="card">
-      <div class="card-header">
-        <div>
-          <div class="card-title">Turno #{{ pedido.numeroTurno }}</div>
-          <div class="card-subtitle">Pedido {{ pedido.id }} · {{ pedido.fecha | date: "d 'de' MMMM, HH:mm" }}</div>
-        </div>
-        <span class="spacer"></span>
-        <app-estadobadge [estado]="pedido.estado" />
-      </div>
-      <div class="table-wrap">
-        <table class="table">
-          <thead>
+<div class="split">
+  <section>
+    <div class="section-head"><h2>Líneas</h2></div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th class="num">Cantidad</th>
+            <th class="num">Precio sin IVA</th>
+            <th class="num">IVA</th>
+            <th class="num">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (l of pedido.lineas; track $index) {
             <tr>
-              <th>Producto</th>
-              <th class="num">Cantidad</th>
-              <th class="num">Precio sin IVA</th>
-              <th class="num">IVA</th>
-              <th class="num">Total</th>
+              <td>{{ l.producto }}</td>
+              <td class="num">{{ l.cantidad }}</td>
+              <td class="num">{{ l.precioSinIva | currency: 'EUR' }}</td>
+              <td class="num muted">{{ l.iva }}%</td>
+              <td class="num">{{ l.total | currency: 'EUR' }}</td>
             </tr>
-          </thead>
-          <tbody>
-            @for (l of pedido.lineas; track $index) {
-              <tr>
-                <td class="strong">{{ l.producto }}</td>
-                <td class="num">{{ l.cantidad }}</td>
-                <td class="num">{{ l.precioSinIva | currency: 'EUR' }}</td>
-                <td class="num text-muted">{{ l.iva }}%</td>
-                <td class="num strong">{{ l.total | currency: 'EUR' }}</td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
+          }
+        </tbody>
+      </table>
     </div>
 
-    <div class="page">
-      <div class="card">
-        <div class="card-header"><div class="card-title">Importes</div></div>
-        <div class="card-body summary">
-          <div class="row"><span class="text-muted">Base imponible</span><span class="num">{{ pedido.baseImponible | currency: 'EUR' }}</span></div>
-          <div class="row"><span class="text-muted">Subtotal (IVA incl.)</span><span class="num">{{ pedido.subtotal | currency: 'EUR' }}</span></div>
-          @if (pedido.cupon) {
-            <div class="row">
-              <span class="text-muted">Cupón <span class="chip">{{ pedido.cupon }}</span></span>
-              <span class="num">−{{ pedido.descuento | currency: 'EUR' }}</span>
-            </div>
-          }
-          <div class="row total"><span>Total</span><span class="num">{{ pedido.total | currency: 'EUR' }}</span></div>
+    <div class="totals importes">
+      <div class="row"><span class="muted">Base imponible</span><span class="num">{{ pedido.baseImponible | currency: 'EUR' }}</span></div>
+      <div class="row"><span class="muted">Subtotal (IVA incl.)</span><span class="num">{{ pedido.subtotal | currency: 'EUR' }}</span></div>
+      @if (pedido.cupon) {
+        <div class="row">
+          <span class="muted">Cupón <span class="code">{{ pedido.cupon }}</span></span>
+          <span class="num">−{{ pedido.descuento | currency: 'EUR' }}</span>
         </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header"><div class="card-title">Cambiar estado</div></div>
-        <div class="card-body estados">
-          <button class="btn btn-outline btn-sm">Pendiente</button>
-          <button class="btn btn-outline btn-sm actual"><app-icon class="sm" name="check" /> En preparación</button>
-          <button class="btn btn-outline btn-sm">Listo</button>
-          <button class="btn btn-outline btn-sm">Entregado</button>
-          <button class="btn btn-outline btn-sm">Cancelado</button>
-        </div>
-      </div>
+      }
+      <div class="row total"><span>Total</span><span class="num">{{ pedido.total | currency: 'EUR' }}</span></div>
     </div>
   </section>
+
+  <!-- PATCH /pedidos/actualizar/estado/{id} (ADMIN, BARISTA) · DELETE /pedidos/eliminar/{id} (ADMIN) -->
+  @if (rol !== 'CLIENTE') {
+    <aside class="acciones">
+      <div class="section-head"><h2>Estado</h2></div>
+      <div class="field">
+        <label for="estado">Cambiar a</label>
+        <select id="estado" class="select">
+          <option>Pendiente</option>
+          <option selected>En preparación</option>
+          <option>Listo</option>
+          <option>Entregado</option>
+          <option>Cancelado</option>
+        </select>
+        <span class="hint">Al cancelar, el uso del cupón se devuelve.</span>
+      </div>
+      <button class="btn btn-primary btn-block">Guardar estado</button>
+
+      @if (rol === 'ADMIN') {
+        <div class="peligro">
+          <button class="btn btn-danger btn-block"><app-icon class="sm" name="trash" /> Eliminar pedido</button>
+        </div>
+      }
+    </aside>
+  }
 </div>

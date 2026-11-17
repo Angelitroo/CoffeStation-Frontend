@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { CATEGORIAS } from '../mocks/mock-data';
-import { IconComponent } from '../icon/icon.component';
+import { CATEGORIAS, ROL_ACTUAL } from '../mocks/mock-data';
 
 @Component({
   selector: 'app-categorias',
-  imports: [IconComponent],
   templateUrl: './categorias.component.html',
   styleUrl: './categorias.component.scss',
 })
 export class CategoriasComponent {
+  rol = ROL_ACTUAL;
   categorias = CATEGORIAS;
 }

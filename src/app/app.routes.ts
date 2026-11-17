@@ -23,8 +23,8 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        title: 'Panel · CoffeStation',
-        data: { title: 'Panel', subtitle: 'Resumen de la actividad de hoy' },
+        title: 'Hoy · CoffeStation',
+        data: { title: 'Hoy' },
         loadComponent: () => import('./dashboard/dashboard.component').then((m) => m.DashboardComponent),
       },
       {

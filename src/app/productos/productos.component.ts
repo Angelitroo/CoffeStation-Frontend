@@ -1,7 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ALERGENOS, CATEGORIAS, PRODUCTOS } from '../mocks/mock-data';
+import { ALERGENOS, CATEGORIAS, PRODUCTOS, ROL_ACTUAL } from '../mocks/mock-data';
 import { IconComponent } from '../icon/icon.component';
 
 @Component({
@@ -11,6 +11,7 @@ import { IconComponent } from '../icon/icon.component';
   styleUrl: './productos.component.scss',
 })
 export class ProductosComponent {
+  rol = ROL_ACTUAL;
   productos = PRODUCTOS;
   categorias = CATEGORIAS;
   alergenos = ALERGENOS;

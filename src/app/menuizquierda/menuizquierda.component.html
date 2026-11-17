@@ -1,70 +1,59 @@
 <div class="layout" [class.menu-abierto]="menuAbierto">
   <aside class="sidebar">
-    <a routerLink="/dashboard" class="brand">
-      <span class="brand-mark"><app-icon class="lg" name="coffee" /></span>
-      <span class="brand-name">CoffeStation</span>
+    <a routerLink="/pedidos" class="brand">
+      <span class="brand-mark">C</span>
+      <span>
+        <span class="brand-name">CoffeStation</span>
+        <span class="brand-sub">Cafetería</span>
+      </span>
     </a>
 
-    <!-- La etiqueta "Admin" marca los apartados exclusivos del rol ADMIN en el backend -->
+    <!-- Cada apartado se muestra según los permisos del backend (@PreAuthorize) -->
     <nav class="nav">
-      <div class="nav-section">Operativa</div>
-      <a class="nav-item" routerLink="/dashboard" routerLinkActive="active">
-        <app-icon name="dashboard" /><span>Panel</span><span class="nav-tag">Admin</span>
-      </a>
+      @if (rol === 'ADMIN') {
+        <a class="nav-item" routerLink="/dashboard" routerLinkActive="active"><app-icon name="dashboard" /> Hoy</a>
+      }
       <a class="nav-item" routerLink="/pedidos" routerLinkActive="active">
-        <app-icon name="pedidos" /><span>Pedidos</span>
+        <app-icon name="pedidos" /> Pedidos <span class="count">5</span>
       </a>
-      <a class="nav-item" routerLink="/nuevo-pedido" routerLinkActive="active">
-        <app-icon name="bag" /><span>Nuevo pedido</span>
-      </a>
-
-      <div class="nav-section">Carta</div>
-      <a class="nav-item" routerLink="/productos" routerLinkActive="active">
-        <app-icon name="coffee" /><span>Productos</span>
-      </a>
-      <a class="nav-item" routerLink="/categorias" routerLinkActive="active">
-        <app-icon name="tag" /><span>Categorías</span>
-      </a>
-
-      <div class="nav-section">Administración</div>
-      <a class="nav-item" routerLink="/cupones" routerLinkActive="active">
-        <app-icon name="ticket" /><span>Cupones</span><span class="nav-tag">Admin</span>
-      </a>
-      <a class="nav-item" routerLink="/informes" routerLinkActive="active">
-        <app-icon name="chart" /><span>Informes</span><span class="nav-tag">Admin</span>
-      </a>
+      @if (rol !== 'ADMIN') {
+        <a class="nav-item" routerLink="/nuevo-pedido" routerLinkActive="active"><app-icon name="bag" /> Nuevo pedido</a>
+      }
+      <a class="nav-item" routerLink="/productos" routerLinkActive="active"><app-icon name="coffee" /> Productos</a>
+      <a class="nav-item" routerLink="/categorias" routerLinkActive="active"><app-icon name="tag" /> Categorías</a>
     </nav>
 
-    <div class="user">
-      <span class="avatar">LM</span>
-      <div class="user-info">
-        <div class="strong">Laura Martín</div>
-        <div class="text-small text-muted">Administradora</div>
-      </div>
-      <a routerLink="/login" class="btn btn-ghost btn-icon" title="Cerrar sesión">
-        <app-icon name="logout" />
-      </a>
-    </div>
+    @if (rol === 'ADMIN') {
+      <div class="nav-group">Administración</div>
+      <nav class="nav">
+        <a class="nav-item" routerLink="/cupones" routerLinkActive="active"><app-icon name="ticket" /> Cupones</a>
+        <a class="nav-item" routerLink="/informes" routerLinkActive="active"><app-icon name="chart" /> Informes</a>
+      </nav>
+    }
+
+    <span class="spacer"></span>
+
+    <a routerLink="/login" class="btn btn-block"><app-icon class="sm" name="logout" /> Cerrar sesión</a>
   </aside>
 
   <div class="backdrop" (click)="menuAbierto = false"></div>
 
   <div class="main">
     <header class="topbar">
-      <button class="btn btn-ghost btn-icon menu-btn" (click)="menuAbierto = true" aria-label="Abrir menú">
+      <button class="icon-btn menu-btn" (click)="menuAbierto = true" aria-label="Abrir menú">
         <app-icon name="menu" />
       </button>
-      <div class="titles">
-        <h1>{{ pagina()['title'] }}</h1>
-        @if (pagina()['subtitle']) {
-          <p class="text-muted">{{ pagina()['subtitle'] }}</p>
-        }
-      </div>
+      <h1>{{ pagina()['title'] }}</h1>
       <span class="spacer"></span>
-      <span class="today text-muted"><app-icon class="sm" name="calendar" /> Martes, 17 nov 2026</span>
-      <button class="btn btn-outline btn-icon" aria-label="Notificaciones">
-        <app-icon name="bell" />
-      </button>
+
+      @if (rol === 'ADMIN') {
+        <a routerLink="/productos/nuevo" class="btn btn-primary"><app-icon class="sm" name="plus" /> Nuevo producto</a>
+      } @else {
+        <a routerLink="/nuevo-pedido" class="btn btn-primary"><app-icon class="sm" name="plus" /> Nuevo pedido</a>
+      }
+      <button class="icon-btn" aria-label="Ayuda"><app-icon name="help" /></button>
+      <button class="icon-btn" aria-label="Notificaciones"><app-icon name="bell" /></button>
+      <span class="avatar" title="Laura Martín · {{ rol }}">LM</span>
     </header>
 
     <main class="content">

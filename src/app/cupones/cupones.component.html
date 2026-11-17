@@ -1,0 +1,125 @@
+<div class="page">
+  <section class="grid-stats">
+    <app-statcard label="Cupones vigentes" value="3" icon="ticket" hint="De 6 creados" />
+    <app-statcard label="Usos totales" value="664" icon="trending" hint="Acumulado de todos los cupones" />
+    <app-statcard label="Cupones personales" value="1" icon="user" hint="Asignados a un cliente" />
+  </section>
+
+  <section class="grid-main">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Todos los cupones</div>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Descuento</th>
+              <th>Vigencia</th>
+              <th>Usos</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (c of cupones; track c.id) {
+              <tr>
+                <td>
+                  <div class="strong codigo">{{ c.codigo }}</div>
+                  <div class="text-small text-muted">{{ c.cliente ?? 'General' }}</div>
+                </td>
+                <td>
+                  <div class="strong">
+                    @if (c.tipo === 'PORCENTAJE') {
+                      {{ c.valor }}%
+                    } @else {
+                      {{ c.valor | currency: 'EUR' }}
+                    }
+                  </div>
+                  <div class="text-small text-muted">
+                    @if (c.importeMinimo) {
+                      Mínimo {{ c.importeMinimo | currency: 'EUR' }}
+                    } @else {
+                      Sin mínimo
+                    }
+                  </div>
+                </td>
+                <td class="text-muted nowrap">{{ c.fechaInicio | date: 'dd/MM/yy' }} – {{ c.fechaFin | date: 'dd/MM/yy' }}</td>
+                <td>
+                  <div class="text-small"><span class="strong">{{ c.usos }}</span> / {{ c.maxUsos }}</div>
+                  <div class="bar-track usos"><div class="bar-fill"></div></div>
+                </td>
+                <td>
+                  @switch (c.estado) {
+                    @case ('VIGENTE') {
+                      <span class="badge badge-success">Vigente</span>
+                    }
+                    @case ('PROGRAMADO') {
+                      <span class="badge badge-warning">Programado</span>
+                    }
+                    @case ('AGOTADO') {
+                      <span class="badge badge-danger">Agotado</span>
+                    }
+                    @case ('CADUCADO') {
+                      <span class="badge">Caducado</span>
+                    }
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <form class="card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Crear cupón</div>
+          <div class="card-subtitle">Nuevo descuento o promoción</div>
+        </div>
+      </div>
+      <div class="card-body form-grid">
+        <div class="field full">
+          <label for="codigo">Código</label>
+          <input id="codigo" class="input" placeholder="NAVIDAD26" maxlength="30" />
+        </div>
+        <div class="field">
+          <label for="tipo">Tipo</label>
+          <select id="tipo" class="select">
+            <option>Porcentaje</option>
+            <option>Importe fijo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="valor">Valor</label>
+          <input id="valor" type="number" class="input" placeholder="10" />
+        </div>
+        <div class="field">
+          <label for="inicio">Fecha inicio</label>
+          <input id="inicio" type="datetime-local" class="input" />
+        </div>
+        <div class="field">
+          <label for="fin">Fecha fin</label>
+          <input id="fin" type="datetime-local" class="input" />
+        </div>
+        <div class="field">
+          <label for="usos">Usos máximos</label>
+          <input id="usos" type="number" class="input" placeholder="100" />
+        </div>
+        <div class="field">
+          <label for="minimo">Importe mínimo</label>
+          <input id="minimo" type="number" class="input" placeholder="0,00 €" />
+        </div>
+        <div class="field full">
+          <label for="cliente">Cliente (opcional)</label>
+          <input id="cliente" class="input" placeholder="Dejar vacío para un cupón general" />
+          <span class="hint">Si se indica, solo ese cliente podrá usarlo.</span>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary btn-block"><app-icon class="sm" name="plus" /> Crear cupón</button>
+      </div>
+    </form>
+  </section>
+</div>

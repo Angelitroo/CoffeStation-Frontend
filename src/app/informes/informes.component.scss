@@ -1,0 +1,55 @@
+.fecha {
+  width: auto;
+}
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 300px;
+}
+
+.col {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.col-area {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.col-bar {
+  width: 100%;
+  max-width: 44px;
+  border-radius: 8px 8px 4px 4px;
+  background: var(--primary-soft);
+}
+
+// Altura de cada día (proporcional al total del ejemplo); el último es hoy
+.col:nth-child(1) .col-bar { height: 71%; }
+.col:nth-child(2) .col-bar { height: 62%; }
+.col:nth-child(3) .col-bar { height: 66%; }
+.col:nth-child(4) .col-bar { height: 85%; }
+.col:nth-child(5) .col-bar { height: 100%; }
+.col:nth-child(6) .col-bar { height: 92%; }
+.col:nth-child(7) .col-bar { height: 31%; }
+
+.col:last-child .col-bar {
+  background: var(--primary);
+}
+
+.rango {
+  display: flex;
+  gap: 10px;
+  padding-bottom: 0;
+}

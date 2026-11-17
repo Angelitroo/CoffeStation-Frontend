@@ -1,0 +1,18 @@
+.codigo {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  letter-spacing: 0.02em;
+}
+
+.usos {
+  width: 90px;
+  height: 5px;
+  margin-top: 4px;
+}
+
+// Porcentaje de usos de cada cupón del ejemplo
+tbody tr:nth-child(1) .bar-fill { width: 43%; }
+tbody tr:nth-child(2) .bar-fill { width: 44%; }
+tbody tr:nth-child(3) .bar-fill { width: 33%; }
+tbody tr:nth-child(4) .bar-fill { width: 0; }
+tbody tr:nth-child(5) .bar-fill { width: 100%; }
+tbody tr:nth-child(6) .bar-fill { width: 78%; }

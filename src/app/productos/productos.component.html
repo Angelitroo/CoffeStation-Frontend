@@ -1,0 +1,89 @@
+<div class="card">
+  <div class="toolbar">
+    <div class="input-icon">
+      <app-icon class="sm" name="search" />
+      <input class="input" placeholder="Buscar por nombre…" />
+    </div>
+    <select class="select" aria-label="Categoría">
+      <option>Todas las categorías</option>
+      @for (c of categorias; track c.id) {
+        <option>{{ c.nombre }}</option>
+      }
+    </select>
+    <select class="select" aria-label="Disponibilidad">
+      <option>Disponibilidad</option>
+      <option>Disponibles</option>
+      <option>No disponibles</option>
+    </select>
+    <select class="select" aria-label="Alérgenos">
+      <option>Sin filtro de alérgenos</option>
+      @for (a of alergenos; track a.id) {
+        <option>Sin {{ a.nombre.toLowerCase() }}</option>
+      }
+    </select>
+    <a routerLink="/productos/nuevo" class="btn btn-primary"><app-icon class="sm" name="plus" /> Nuevo producto</a>
+  </div>
+
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Categoría</th>
+          <th class="num">Precio sin IVA</th>
+          <th class="num">IVA</th>
+          <th class="num">PVP</th>
+          <th>Alérgenos</th>
+          <th>Disponible</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of productos; track p.id) {
+          <tr>
+            <td class="col-main">
+              <div class="strong">{{ p.nombre }}</div>
+              <div class="text-small text-muted">{{ p.descripcion }}</div>
+            </td>
+            <td class="text-muted">{{ p.categoria }}</td>
+            <td class="num">{{ p.precioSinIva | currency: 'EUR' }}</td>
+            <td class="num text-muted">{{ p.iva }}%</td>
+            <td class="num strong">{{ p.pvp | currency: 'EUR' }}</td>
+            <td>
+              <div class="chips">
+                @for (a of p.alergenos; track a) {
+                  <span class="chip">{{ a }}</span>
+                } @empty {
+                  <span class="text-soft">—</span>
+                }
+              </div>
+            </td>
+            <td>
+              <label class="switch"><input type="checkbox" [checked]="p.disponible" aria-label="Disponible" /><span></span></label>
+            </td>
+            <td>
+              @if (p.activo) {
+                <span class="badge badge-success">Activo</span>
+              } @else {
+                <span class="badge">De baja</span>
+              }
+            </td>
+            <td class="actions">
+              <a routerLink="/productos/{{ p.id }}/editar" class="btn btn-ghost btn-icon" title="Editar"><app-icon class="sm" name="edit" /></a>
+              <button class="btn btn-ghost btn-icon" title="Dar de baja"><app-icon class="sm" name="trash" /></button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card-footer">
+    17 productos en la carta
+    <div class="pagination">
+      <button class="active">1</button>
+      <button>2</button>
+    </div>
+  </div>
+</div>

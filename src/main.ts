@@ -1,5 +1,17 @@
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { LOCALE_ID, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { routes } from './app/app.routes';
+import { AppComponent } from './app/app.component';
 
-bootstrapApplication(App, appConfig).catch((err) => console.error(err));
+registerLocaleData(localeEs);
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes, withComponentInputBinding()),
+    { provide: LOCALE_ID, useValue: 'es' },
+  ],
+}).catch((err) => console.error(err));

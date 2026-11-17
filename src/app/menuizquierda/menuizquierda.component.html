@@ -1,0 +1,74 @@
+<div class="layout" [class.menu-abierto]="menuAbierto">
+  <aside class="sidebar">
+    <a routerLink="/dashboard" class="brand">
+      <span class="brand-mark"><app-icon class="lg" name="coffee" /></span>
+      <span class="brand-name">CoffeStation</span>
+    </a>
+
+    <!-- La etiqueta "Admin" marca los apartados exclusivos del rol ADMIN en el backend -->
+    <nav class="nav">
+      <div class="nav-section">Operativa</div>
+      <a class="nav-item" routerLink="/dashboard" routerLinkActive="active">
+        <app-icon name="dashboard" /><span>Panel</span><span class="nav-tag">Admin</span>
+      </a>
+      <a class="nav-item" routerLink="/pedidos" routerLinkActive="active">
+        <app-icon name="pedidos" /><span>Pedidos</span>
+      </a>
+      <a class="nav-item" routerLink="/nuevo-pedido" routerLinkActive="active">
+        <app-icon name="bag" /><span>Nuevo pedido</span>
+      </a>
+
+      <div class="nav-section">Carta</div>
+      <a class="nav-item" routerLink="/productos" routerLinkActive="active">
+        <app-icon name="coffee" /><span>Productos</span>
+      </a>
+      <a class="nav-item" routerLink="/categorias" routerLinkActive="active">
+        <app-icon name="tag" /><span>Categorías</span>
+      </a>
+
+      <div class="nav-section">Administración</div>
+      <a class="nav-item" routerLink="/cupones" routerLinkActive="active">
+        <app-icon name="ticket" /><span>Cupones</span><span class="nav-tag">Admin</span>
+      </a>
+      <a class="nav-item" routerLink="/informes" routerLinkActive="active">
+        <app-icon name="chart" /><span>Informes</span><span class="nav-tag">Admin</span>
+      </a>
+    </nav>
+
+    <div class="user">
+      <span class="avatar">LM</span>
+      <div class="user-info">
+        <div class="strong">Laura Martín</div>
+        <div class="text-small text-muted">Administradora</div>
+      </div>
+      <a routerLink="/login" class="btn btn-ghost btn-icon" title="Cerrar sesión">
+        <app-icon name="logout" />
+      </a>
+    </div>
+  </aside>
+
+  <div class="backdrop" (click)="menuAbierto = false"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="btn btn-ghost btn-icon menu-btn" (click)="menuAbierto = true" aria-label="Abrir menú">
+        <app-icon name="menu" />
+      </button>
+      <div class="titles">
+        <h1>{{ pagina()['title'] }}</h1>
+        @if (pagina()['subtitle']) {
+          <p class="text-muted">{{ pagina()['subtitle'] }}</p>
+        }
+      </div>
+      <span class="spacer"></span>
+      <span class="today text-muted"><app-icon class="sm" name="calendar" /> Martes, 17 nov 2026</span>
+      <button class="btn btn-outline btn-icon" aria-label="Notificaciones">
+        <app-icon name="bell" />
+      </button>
+    </header>
+
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

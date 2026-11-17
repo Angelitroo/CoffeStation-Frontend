@@ -1,0 +1,77 @@
+<div class="tpv">
+  <section class="page">
+    <div class="row filtros">
+      <div class="input-icon buscador">
+        <app-icon class="sm" name="search" />
+        <input class="input" placeholder="Buscar producto…" />
+      </div>
+      <div class="segmented">
+        <button class="active">Todo</button>
+        <button>Cafés</button>
+        <button>Tés e infusiones</button>
+        <button>Bollería</button>
+        <button>Tostadas y salados</button>
+        <button>Bebidas frías</button>
+      </div>
+    </div>
+
+    <div class="productos">
+      @for (p of productos; track p.id) {
+        <button class="card producto" [disabled]="!p.disponible">
+          <div class="row">
+            <span class="text-small text-muted">{{ p.categoria }}</span>
+            <span class="spacer"></span>
+            @if (!p.disponible) {
+              <span class="badge">Agotado</span>
+            }
+          </div>
+          <div class="strong nombre">{{ p.nombre }}</div>
+          <div class="text-small text-muted">{{ p.descripcion }}</div>
+          <div class="row pie">
+            <span class="precio">{{ p.pvp | currency: 'EUR' }}</span>
+            <span class="spacer"></span>
+            <span class="add"><app-icon class="sm" name="plus" /></span>
+          </div>
+        </button>
+      }
+    </div>
+  </section>
+
+  <aside class="card ticket">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Pedido actual</div>
+        <div class="card-subtitle">Turno #49</div>
+      </div>
+    </div>
+
+    <div class="card-body lineas">
+      @for (l of ticket.lineas; track $index) {
+        <div class="linea">
+          <div class="strong">{{ l.producto }}</div>
+          <div class="cantidad">
+            <button class="btn btn-outline btn-icon"><app-icon class="xs" name="minus" /></button>
+            <span class="strong">{{ l.cantidad }}</span>
+            <button class="btn btn-outline btn-icon"><app-icon class="xs" name="plus" /></button>
+          </div>
+          <span class="num strong">{{ l.total | currency: 'EUR' }}</span>
+        </div>
+      }
+    </div>
+
+    <div class="card-body cupon">
+      <label class="label" for="cupon">Cupón de descuento</label>
+      <div class="row">
+        <input id="cupon" class="input" placeholder="BIENVENIDA10" />
+        <button class="btn btn-outline">Aplicar</button>
+      </div>
+    </div>
+
+    <div class="card-body summary">
+      <div class="row"><span class="text-muted">Base imponible</span><span class="num">{{ ticket.baseImponible | currency: 'EUR' }}</span></div>
+      <div class="row"><span class="text-muted">Subtotal (IVA incl.)</span><span class="num">{{ ticket.subtotal | currency: 'EUR' }}</span></div>
+      <div class="row total"><span>Total</span><span class="num">{{ ticket.subtotal | currency: 'EUR' }}</span></div>
+      <button class="btn btn-primary btn-block">Confirmar pedido</button>
+    </div>
+  </aside>
+</div>

@@ -1,0 +1,36 @@
+// Paleta y medidas de CoffeStation
+:root {
+  --bg: #f7f3ee;
+  --surface: #ffffff;
+  --surface-2: #fbf8f4;
+  --border: #ece4da;
+  --border-strong: #ddd1c3;
+
+  --text: #2b211b;
+  --text-muted: #85766a;
+  --text-soft: #a99a8d;
+
+  --primary: #6f4e37;
+  --primary-strong: #573b29;
+  --primary-soft: #f2e8de;
+  --accent: #c08a5b;
+
+  --success: #4f7a55;
+  --success-soft: #e7efe5;
+  --warning: #a87522;
+  --warning-soft: #f8eedb;
+  --info: #94643e;
+  --info-soft: #f4e6d8;
+  --danger: #a4483e;
+  --danger-soft: #f6e4e0;
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --shadow: 0 1px 2px rgba(60, 40, 25, 0.04), 0 2px 8px rgba(60, 40, 25, 0.04);
+
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+
+  --sidebar-width: 248px;
+}
